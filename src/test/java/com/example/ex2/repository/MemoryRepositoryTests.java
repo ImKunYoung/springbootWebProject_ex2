@@ -17,10 +17,8 @@ public class MemoryRepositoryTests {
     MemoRepository memoRepository;
 
     @Test
-    public void testClass() {
-        System.out.println(memoRepository.getClass().getName());
-    }
-
+    public void testClass() { System.out.println(memoRepository.getClass().getName()); }
+    /* 등록 작업 테스트 */
     @Test
     public void testInsertDummies() {
         IntStream.rangeClosed(1, 100).forEach(i -> {
@@ -29,6 +27,7 @@ public class MemoryRepositoryTests {
         });
     }
 
+    /* 조회 작업 테스트 1 */
     @Test
     public void testSelect() { // 데이터베이스 먼저 이용
         // 데이터베이스에 존재하는 mno
@@ -43,7 +42,7 @@ public class MemoryRepositoryTests {
             System.out.println(memo);
         }
     }
-
+    /* 조회 작업 테스트 2 */
     @Transactional
     @Test
     public void testSelect2() { // 데이터베이스 필요한 순간
@@ -56,6 +55,13 @@ public class MemoryRepositoryTests {
 
         System.out.println(memo);
     }
+    /* 수정 작업 테스트 */
+    @Test
+    public void testUpdate() {
+        Memo memo = Memo.builder().mno(100L).memoText("Update Text").build();
+        System.out.println(memoRepository.save(memo));
+    }
+
 
 
 }
