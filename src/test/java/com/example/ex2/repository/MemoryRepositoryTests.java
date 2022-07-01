@@ -26,7 +26,6 @@ public class MemoryRepositoryTests {
             memoRepository.save(memo);
         });
     }
-
     /* 조회 작업 테스트 1 */
     @Test
     public void testSelect() { // 데이터베이스 먼저 이용
@@ -60,6 +59,12 @@ public class MemoryRepositoryTests {
     public void testUpdate() {
         Memo memo = Memo.builder().mno(100L).memoText("Update Text").build();
         System.out.println(memoRepository.save(memo));
+    }
+    /* 삭제 작업 테스트 */
+    @Test
+    public void testDelete() {
+        Long mno = 100L;
+        memoRepository.deleteById(mno);
     }
 
 
