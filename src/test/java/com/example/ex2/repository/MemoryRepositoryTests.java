@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.IntStream;
 
@@ -129,6 +130,28 @@ public class MemoryRepositoryTests {
         Pageable pageable = PageRequest.of(0, 10, sortAll);
 
         Page<Memo> result = memoRepository.findAll(pageable);
+
+        result.get().forEach(System.out::println);
+
+    }
+
+    /* 쿼리 메서드 */
+    @Test
+    public void testQueryMethods() {
+        List<Memo> list = memoRepository.findByMnoBetweenOrderByMnoDesc(70L, 80L);
+
+        for (Memo memo : list) {
+            System.out.println(memo);
+        }
+    }
+
+    /* 쿼리 메서드와 Pageable 의 결합 */
+    @Test
+    public void testQueryMethodWithPageable() {
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("mno").descending());
+
+        Page<Memo> result = memoRepository.findByMnoBetween(10L, 50L, pageable);
 
         result.get().forEach(System.out::println);
 
