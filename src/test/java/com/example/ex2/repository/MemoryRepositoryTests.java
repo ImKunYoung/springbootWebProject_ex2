@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.test.annotation.Commit;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -154,6 +155,16 @@ public class MemoryRepositoryTests {
         Page<Memo> result = memoRepository.findByMnoBetween(10L, 50L, pageable);
 
         result.get().forEach(System.out::println);
+
+    }
+
+    /* 삭제 쿼리 */
+    @Commit
+    @Transactional
+    @Test
+    public void testDeleteQueryMethods() {
+
+        memoRepository.deleteMemoByMnoLessThan(10L);
 
     }
 
