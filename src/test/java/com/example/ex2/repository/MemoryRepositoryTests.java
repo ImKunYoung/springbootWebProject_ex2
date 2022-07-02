@@ -7,6 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
@@ -100,4 +101,37 @@ public class MemoryRepositoryTests {
             System.out.println(memo);
         }
     }
+
+    /* 정렬 조건 추가하기 1 */
+    @Test
+    public void testSort() {
+
+        Sort sort1 = Sort.by("mno").descending();
+
+        Pageable pageable = PageRequest.of(0, 10, sort1);
+
+        Page<Memo> result = memoRepository.findAll(pageable);
+
+        /* result.get().forEach(memo -> {System.out.println(memo);}); */
+
+        result.get().forEach(System.out::println);
+
+    }
+
+    /* 정렬 조건 추가하기 2 */
+    @Test
+    public void testSort2() {
+
+        Sort sort1 = Sort.by("mno").descending();
+        Sort sort2 = Sort.by("memoText").descending();
+        Sort sortAll = sort1.and(sort2); // and 를 이용한 연결
+
+        Pageable pageable = PageRequest.of(0, 10, sortAll);
+
+        Page<Memo> result = memoRepository.findAll(pageable);
+
+        result.get().forEach(System.out::println);
+
+    }
+
 }
